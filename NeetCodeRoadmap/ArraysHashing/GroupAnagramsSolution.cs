@@ -13,12 +13,23 @@ namespace NeetCodeRoadmap.ArraysHashing
         public IList<IList<string>> GroupAnagrams(string[] strs)
         {
             // Key - длина слова, value - слово (или что-то другое уже).
-            var dictByLength = new Dictionary<int, string>();
+            var dictByLength = new Dictionary<int, IList<string>>();
+
+            var setOfWords = new HashSet<IList<string>>();
             foreach (var word in strs)
             {
-                if (dictByLength.ContainsKey(word.Length))
+                if (dictByLength.TryGetValue(word.Length, out var wordsWithSameLength))
                 {
+                    var wordLettersMap = FormMapForWord(word);
 
+                    foreach (var wordWithSameLength in wordsWithSameLength)
+                    {
+                        var isAnagram = IsAnagram(wordLettersMap, wordWithSameLength);
+                    }
+                }
+                else
+                {
+                    dictByLength.Add(word.Length, new List<string> { word });
                 }
             }
         }
@@ -29,6 +40,11 @@ namespace NeetCodeRoadmap.ArraysHashing
 
             var sLetters = FormMapForWord(s);
 
+            return IsAnagram(sLetters, t);
+        }
+
+        private bool IsAnagram(IDictionary<char, int> sLetters, string t)
+        {
             foreach (var letter in t)
             {
                 if (!sLetters.TryGetValue(letter, out var value))
