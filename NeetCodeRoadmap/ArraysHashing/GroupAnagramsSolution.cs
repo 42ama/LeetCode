@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,39 +13,52 @@ namespace NeetCodeRoadmap.ArraysHashing
         /// <returns>Среди строк найденные анаграммы сгруппированные вместе</returns>
         public IList<IList<string>> GroupAnagrams(string[] strs)
         {
-            // Key - длина слова, value - слово (или что-то другое уже).
-            var dictByLength = new Dictionary<int, IList<string>>();
+            var previousWords = new List<List<string>>();
 
-            var setOfWords = new HashSet<IList<string>>();
+            // Берём слово word из strs
             foreach (var word in strs)
             {
-                if (dictByLength.TryGetValue(word.Length, out var wordsWithSameLength))
+                var isAnyFound = false;
+                // Проверяем его относительно всех запомненных ранее слов
+                foreach (var previousWordSet in previousWords)
                 {
-                    var wordLettersMap = FormMapForWord(word);
+                    // Из каждого сета достаточно взять один элемент.
+                    var first = previousWordSet.First();
+                    var isAnagram = IsAnagram(first, word);
 
-                    foreach (var wordWithSameLength in wordsWithSameLength)
+                    // Если нашли анаграму, то прекращаем поиск и кладём слово в тот же сет, где и была анаграма
+                    if (isAnagram)
                     {
-                        var isAnagram = IsAnagram(wordLettersMap, wordWithSameLength);
+                        previousWordSet.Add(word);
+                        isAnyFound = true;
+                        break;
                     }
                 }
-                else
+
+                if (!isAnyFound)
                 {
-                    dictByLength.Add(word.Length, new List<string> { word });
+                    // Если не нашли, то создаём новый сет
+                    previousWords.Add(new List<string> { word });
                 }
             }
+
+            var result = new List<IList<string>>();
+            foreach (var list in previousWords)
+            {
+                list.Sort();
+                result.Add(list);
+            }
+
+            return result;
         }
 
         private bool IsAnagram(string s, string t)
         {
             if (s.Length != t.Length) { return false; }
+            if (s.Length < 2) { return s == t; } // Так будет быстрее запроцессить часть случаев
 
             var sLetters = FormMapForWord(s);
 
-            return IsAnagram(sLetters, t);
-        }
-
-        private bool IsAnagram(IDictionary<char, int> sLetters, string t)
-        {
             foreach (var letter in t)
             {
                 if (!sLetters.TryGetValue(letter, out var value))
