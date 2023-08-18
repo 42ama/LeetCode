@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NeetCodeRoadmap.ArraysHashing_
 {
-    [Obsolete("Слабое решение, см GroupAnagramsBetterSolution")]
+    [Obsolete("Слабое решение, см BetterSolution")]
     internal class GroupAnagramsSolution
     {
         private Dictionary<string, Dictionary<char, int>> _wordMapCache = new Dictionary<string, Dictionary<char, int>>();
