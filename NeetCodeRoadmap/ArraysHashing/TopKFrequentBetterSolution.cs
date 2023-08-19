@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace NeetCodeRoadmap.ArraysHashing
 {
+    /// <summary>
+    /// https://leetcode.com/problems/top-k-frequent-elements/
+    /// </summary>
     internal class TopKFrequentBetterSolution
     {
         public int[] TopKFrequent(int[] nums, int k)

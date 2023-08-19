@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace NeetCodeRoadmap.ArraysHashing
 {
+    /// <summary>
+    /// https://leetcode.com/problems/two-sum/
+    /// </summary>
     internal class TwoSumSolution
     {
         public int[] TwoSum(int[] nums, int target)

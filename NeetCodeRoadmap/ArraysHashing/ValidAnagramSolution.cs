@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace NeetCodeRoadmap.ArraysHashing
 {
+    /// <summary>
+    /// https://leetcode.com/problems/valid-anagram/
+    /// </summary>
     internal class ValidAnagramSolution
     {
         /// <param name="s">Original word</param>

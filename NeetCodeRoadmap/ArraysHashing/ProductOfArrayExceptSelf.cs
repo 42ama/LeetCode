@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace NeetCodeRoadmap.ArraysHashing
 {
+    /// <summary>
+    /// https://leetcode.com/problems/product-of-array-except-self/
+    /// </summary>
     internal class ProductOfArrayExceptSelf
     {
-        /// <summary>
-        /// https://leetcode.com/problems/product-of-array-except-self/
-        /// </summary>
         public int[] ProductExceptSelf(int[] nums)
         {
 

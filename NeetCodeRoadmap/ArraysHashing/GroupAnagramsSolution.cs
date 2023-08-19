@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace NeetCodeRoadmap.ArraysHashing_
 {
+    /// <summary>
+    /// https://leetcode.com/problems/group-anagrams/
+    /// </summary>
     [Obsolete("Слабое решение, см BetterSolution")]
     internal class GroupAnagramsSolution
     {

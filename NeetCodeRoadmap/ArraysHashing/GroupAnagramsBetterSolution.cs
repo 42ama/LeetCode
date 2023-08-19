@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace NeetCodeRoadmap.ArraysHashing
 {
+    /// <summary>
+    /// https://leetcode.com/problems/group-anagrams/
+    /// </summary>
     internal class GroupAnagramsBetterSolution
     {
         public IList<IList<string>> GroupAnagrams(string[] strs)

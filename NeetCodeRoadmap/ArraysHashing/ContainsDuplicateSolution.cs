@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace NeetCodeRoadmap.ArraysHashing
 {
+    /// <summary>
+    /// https://leetcode.com/problems/contains-duplicate/
+    /// </summary>
     internal class ContainsDuplicateSolution
     {
         public bool ContainsDuplicate(int[] nums)

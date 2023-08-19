@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace NeetCodeRoadmap.ArraysHashing
 {
+    /// <summary>
+    /// https://leetcode.com/problems/top-k-frequent-elements/
+    /// </summary>
     [Obsolete("Слабое решение, см BetterSolution")]
     internal class TopKFrequentSolution
     {
