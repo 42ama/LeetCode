@@ -1,6 +1,8 @@
 ﻿
-[Obsolete("Слабое решение, см BetterSolution")]
-public class ValidSudokuSolution
+/// <summary>
+/// Не использовать структуру и сделать ранний выход дало достаточный прирост скорости.
+/// </summary>
+public class ValidSudokuBetterSolution
 {
     public bool IsValidSudoku(char[][] board)
     {
@@ -12,7 +14,7 @@ public class ValidSudokuSolution
             columns[i] = new HashSet<char>();
         }
 
-        var boxes = new Dictionary<Coordinate, HashSet<char>>();
+        var boxes = new HashSet<char>[board.Length, board.Length];
 
         for (int rowIndex = 0; rowIndex < board.Length; rowIndex++)
         {
@@ -20,6 +22,8 @@ public class ValidSudokuSolution
             for (int symbolInRowIndex = 0; symbolInRowIndex < currentRow.Length; symbolInRowIndex++)
             {
                 var currentSymbol = currentRow[symbolInRowIndex];
+
+                if (currentSymbol == '.') { continue; }
 
                 // Добавляем в строку
                 var isFoundInRow = CheckAndAddToSet(currentRowSet, currentSymbol);
@@ -35,10 +39,12 @@ public class ValidSudokuSolution
                     return false;
                 }
 
-                var coordinateBracket = GetCoordianteBracket(symbolInRowIndex, rowIndex);
-                if (boxes.TryGetValue(coordinateBracket, out var boxSet))
+                var xForBox = GetBracket(symbolInRowIndex);
+                var yForBox = GetBracket(rowIndex);
+                var currentBox = boxes[xForBox, yForBox];
+                if (currentBox != null)
                 {
-                    var isFoundInBox = CheckAndAddToSet(boxSet, currentSymbol);
+                    var isFoundInBox = CheckAndAddToSet(currentBox, currentSymbol);
                     if (isFoundInBox)
                     {
                         return false;
@@ -46,8 +52,8 @@ public class ValidSudokuSolution
                 }
                 else
                 {
-                    boxes.Add(coordinateBracket, new HashSet<char>());
-                    CheckAndAddToSet(boxes[coordinateBracket], currentSymbol);
+                    boxes[xForBox, yForBox] = new HashSet<char>();
+                    CheckAndAddToSet(boxes[xForBox, yForBox], currentSymbol);
                 }
             }
 
@@ -60,8 +66,6 @@ public class ValidSudokuSolution
     /// <returns>true если элемент уже был в сете, false если это точка или новый элемент</returns>
     private bool CheckAndAddToSet(ISet<char> set, char symbol)
     {
-        if (symbol == '.') { return false; }
-
         if (set.Contains(symbol))
         {
             return true;
@@ -73,23 +77,8 @@ public class ValidSudokuSolution
         }
     }
 
-    private Coordinate GetCoordianteBracket(int x, int y)
-    {
-        return new Coordinate
-        {
-            RowBracket = GetBracket(x),
-            ColumnBracket = GetBracket(y)
-        };
-    }
-
     private int GetBracket(int value)
     {
         return value / 3;
-    }
-
-    private struct Coordinate
-    {
-        public int RowBracket;
-        public int ColumnBracket;
     }
 }
