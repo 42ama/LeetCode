@@ -16,16 +16,77 @@ namespace NeetCodeRoadmap.ArraysHashing
     /// </summary>
     internal class EncodeDecodeSolution_OutOfContest
     {
+        private char _separator = '_';
         
         public string Encode(List<string> stringsToEncode)
         {
-            return null;
+            var result = new StringBuilder();
+            for (int i = 0; i < stringsToEncode.Count; i++)
+            {
+                var stringToEncode = stringsToEncode[i];
+                result.Append(stringToEncode.Length);
+                result.Append(_separator);
+                foreach (var symbol in stringToEncode)
+                {
+                    result.Append(symbol);
+                }          
+            }
+            return result.ToString();
         }
 
         
         public List<string> Decode(string stringToDecode)
         {
-            return null;
+            var currentWord = new StringBuilder();
+            var words = new List<string>();
+
+            var lengthString = new StringBuilder();
+            var counter = 0;
+            var length = -1;
+            var isProcessingWord = false;
+            for (int i = 0; i < stringToDecode.Length; i++)
+            {
+                var symbol = stringToDecode[i];
+
+                if (isProcessingWord)
+                {
+                    if (counter == length)
+                    {
+                        words.Add(currentWord.ToString());
+                        currentWord.Clear();
+                        counter = 0;
+                        isProcessingWord = false;
+                    }
+                    else
+                    {
+                        currentWord.Append(symbol);
+                        counter++;
+                        continue;
+                    }
+                }
+
+
+                if (!isProcessingWord)
+                {
+                    if (char.IsDigit(symbol))
+                    {
+                        lengthString.Append(symbol);
+                        continue;
+                    }
+
+                    if (symbol == _separator)
+                    {
+                        length = int.Parse(lengthString.ToString());
+                        lengthString.Clear();
+                        isProcessingWord = true;
+                        continue;
+                    }
+                }
+            }
+
+            words.Add(currentWord.ToString());
+
+            return words;
         }
     }
 }

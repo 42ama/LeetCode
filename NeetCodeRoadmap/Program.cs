@@ -1,19 +1,9 @@
 ﻿using NeetCodeRoadmap.ArraysHashing;
 
-var solutionOnTest = new ValidSudokuSolution();
+var solutionOnTest = new EncodeDecodeSolution_OutOfContest();
 
-var testData = new char[][] {
-    new char[] { '5', '3', '.', '.', '7', '.', '.', '.', '.' },
-    new char[] {'6','.','.','1','9','5','.','.','.'},
-    new char[] {'.','9','8','.','.','.','.','6','.'},
+var testData = new List<string> { "we", "say", ":", "yes", "or fucking no", "what do you", "not", " ", "", "understand" };
+var result = solutionOnTest.Encode(testData);
 
-    new char[] {'8','.','.','.','6','.','.','.','3'},
-    new char[] {'4','.','.','8','.','3','.','.','1'},
-    new char[] {'7','.','.','.','2','.','.','.','6'},
-
-    new char[] {'.','6','.','.','.','.','2','8','.'},
-    new char[] {'.','.','.','4','1','9','.','.','5'},
-    new char[] {'.','.','.','.','8','.','.','7','9'},
-};
-var result = solutionOnTest.IsValidSudoku(testData);
-;
+Console.WriteLine($"Encoded: {result}");
+Console.WriteLine($"Decoded: {string.Join(",", solutionOnTest.Decode(result))}");
