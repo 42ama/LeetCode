@@ -1,9 +1,7 @@
 ﻿using NeetCodeRoadmap.ArraysHashing;
 
-var solutionOnTest = new EncodeDecodeSolution_OutOfContest();
+var solutionOnTest = new LongestConsecutiveSequenceSolution();
 
-var testData = new List<string> { "we", "say", ":", "yes", "or fucking no", "what do you", "not", " ", "", "understand" };
-var result = solutionOnTest.Encode(testData);
-
-Console.WriteLine($"Encoded: {result}");
-Console.WriteLine($"Decoded: {string.Join(",", solutionOnTest.Decode(result))}");
+var testData = new int[] { 8, 6, 3, 5, 2, 1, 4, 7 };
+var result = solutionOnTest.LongestConsecutive(testData);
+Console.WriteLine(result);
