@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace NeetCodeRoadmap.ArraysHashing
 {
+    [Obsolete("Слабое решение, см BetterSolution")]
     internal class LongestConsecutiveSequenceSolution
     {
         // You must write an algorithm that runs in O(n) time.
@@ -19,31 +20,43 @@ namespace NeetCodeRoadmap.ArraysHashing
                 var currentNumber = nums[i];
                 var prevNumber = currentNumber - 1;
                 var nextNumber = currentNumber + 1;
-                var isAddedAnywhere = false;
+
+                var addedSets = new List<SortedSet<int>>();
                 foreach (var candidateSet in listOfCandidates)
                 {
                     if (candidateSet.Contains(prevNumber) || candidateSet.Contains(nextNumber))
                     {
                         candidateSet.Add(currentNumber);
-                        isAddedAnywhere = true;
+
+                        foreach (var addedSet in addedSets)
+                        {
+                            foreach (var item in addedSet)
+                            {
+                                candidateSet.Add(item);
+                            }
+                        }
+
+                        addedSets.Add(candidateSet);
                     }
                 }
 
-                if (!isAddedAnywhere)
+                if (addedSets.Count == 0)
                 {
                     listOfCandidates.Add(new SortedSet<int> { currentNumber });
                 }
             }
 
-            foreach (var candidateSet in listOfCandidates)
+            for (int i = 0; i < listOfCandidates.Count; i++)
             {
+                var candidateSet = listOfCandidates[i];
                 var currentSetFirst = candidateSet.First();
                 var currentSetLast = candidateSet.Last();
-                foreach (var anotherCandidateSet in listOfCandidates)
+                for (int j = 0; j < listOfCandidates.Count; j++)
                 {
-                    if (candidateSet == anotherCandidateSet) { continue; }
+                    var anotherCandidateSet = listOfCandidates[j];
+                    if (i == j) { continue; }
 
-                    if (anotherCandidateSet.Contains(currentSetFirst) ||  anotherCandidateSet.Contains(currentSetLast))
+                    if (anotherCandidateSet.Contains(currentSetFirst) || anotherCandidateSet.Contains(currentSetLast))
                     {
                         foreach (var item in anotherCandidateSet)
                         {
