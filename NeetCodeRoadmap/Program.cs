@@ -1,7 +1,12 @@
 ﻿using NeetCodeRoadmap.ArraysHashing;
+using NeetCodeRoadmap.Stack;
 
-var solutionOnTest = new LongestConsecutiveSequenceSolution();
-
-var testData = new int[] { 8, 6, 3, 5, 2, 1, 4, 7 };
-var result = solutionOnTest.LongestConsecutive(testData);
-Console.WriteLine(result);
+MinStack minStack = new MinStack();
+minStack.Push(-2);
+minStack.Push(0);
+minStack.Push(-3);
+var a= minStack.GetMin(); // return -3
+minStack.Pop();
+var b = minStack.Top();    // return 0
+var c = minStack.GetMin(); // return -2
+;
