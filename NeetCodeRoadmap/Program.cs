@@ -1,7 +1,7 @@
 ﻿using NeetCodeRoadmap.ArraysHashing;
 using NeetCodeRoadmap.Stack;
 
-MinStack minStack = new MinStack();
+var minStack = new MinStackNeetCodeSolution();
 minStack.Push(-2);
 minStack.Push(0);
 minStack.Push(-3);
