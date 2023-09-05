@@ -8,89 +8,38 @@ namespace NeetCodeRoadmap.Stack
 {
     internal class GenerateParenthesesSolution
     {
-        const string LEFT_PAR = "(";
-        const string RIGHT_PAR = ")";
+        const char LEFT_PAR = '(';
+        const char RIGHT_PAR = ')';
 
         public IList<string> GenerateParenthesis(int n)
         {
             var result = new List<string>();
-            var currentCombination = new StringBuilder();
+            var currentCombination = new Stack<char>();
 
-            currentCombination.Clear();
-            AddNestedBracket(currentCombination, n);
-            result.Add(currentCombination.ToString());
-
-            if (n > 1)
+            void Backtrack(int openCount, int closedCount)
             {
-                currentCombination.Clear();
-                AddNConsecutiveBrackets(currentCombination, n);
-                result.Add(currentCombination.ToString());
+                if (openCount == closedCount && openCount == n)
+                {
+                    result.Add(string.Join("", currentCombination));
+                }
+                if (openCount < n)
+                {
+                    currentCombination.Push(LEFT_PAR);
+                    Backtrack(openCount + 1, closedCount);
+                    currentCombination.Pop();
+                }
+
+                if (closedCount < openCount)
+                {
+                    currentCombination.Push(RIGHT_PAR);
+                    Backtrack(openCount, closedCount + 1);
+                    currentCombination.Pop();
+                }
             }
 
-            //var currentNestLevel = n;
-            //while (currentNestLevel > 0)
-            //{
-            //    currentCombination.Clear();
-            //    for (int i = 1; i <= currentNestLevel; i++)
-            //    {
-            //        currentCombination.Append(LEFT_PAR);
-            //    }
-
-            //    // Рекурсивное наполнение?
-
-            //    for (int i = 1; i <= currentNestLevel; i++)
-            //    {
-            //        currentCombination.Append(RIGHT_PAR);
-            //    }
-            //}
-
-            if (n == 3)
-            {
-                // ["((()))","(()())","(())()","()(())","()()()"]
-                // + - - - +
-
-                // "(()())"
-                currentCombination.Clear();
-                currentCombination.Append(LEFT_PAR);
-                AddNConsecutiveBrackets(currentCombination, n - 1);
-                currentCombination.Append(RIGHT_PAR);
-                result.Add(currentCombination.ToString());
-
-                // "(())()"
-                currentCombination.Clear();
-                AddNestedBracket(currentCombination, n - 1);
-                AddNestedBracket(currentCombination, n - 2);
-                result.Add(currentCombination.ToString());
-
-                // "()(())"
-                currentCombination.Clear();
-                AddNestedBracket(currentCombination, n - 2);
-                AddNestedBracket(currentCombination, n - 1);
-                result.Add(currentCombination.ToString());
-            }
+            Backtrack(0, 0);
 
             return result;
-        }
-
-        private void AddNConsecutiveBrackets(StringBuilder sb, int numberOf)
-        {
-            for (int i = 1; i <= numberOf; i++)
-            {
-                sb.Append(LEFT_PAR);
-                sb.Append(RIGHT_PAR);
-            }
-        }
-
-        private void AddNestedBracket(StringBuilder sb, int nestLevel)
-        {
-            for (int i = 1; i <= nestLevel; i++)
-            {
-                sb.Append(LEFT_PAR);
-            }
-            for (int i = 1; i <= nestLevel; i++)
-            {
-                sb.Append(RIGHT_PAR);
-            }
         }
     }
 }
