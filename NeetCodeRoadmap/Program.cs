@@ -1,12 +1,18 @@
 ﻿using NeetCodeRoadmap.ArraysHashing;
 using NeetCodeRoadmap.Stack;
+using Newtonsoft.Json.Linq;
 
-Console.WriteLine(DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssz"));
-Console.WriteLine(DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ"));
-Console.WriteLine(DateTime.Now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssz"));
-Console.WriteLine(DateTime.Now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ"));
-Console.WriteLine(DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssz"));
-Console.WriteLine(DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+var jObject = JObject.Parse(@"{
+  CPU: 'Intel',
+  Drives: [
+    'DVD read/writer',
+    '500 gigabyte hard drive'
+  ]
+}");
+foreach (var item in jObject)
+{
+    ;
+}
 
 var solution = new EvaluateReversePolishNotationSolution();
 var result = solution.EvalRPN(new string[] { "4", "13", "5", "/", "+" });
