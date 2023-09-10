@@ -1,20 +1,6 @@
-﻿using NeetCodeRoadmap.ArraysHashing;
-using NeetCodeRoadmap.Stack;
-using Newtonsoft.Json.Linq;
+﻿using NeetCodeRoadmap.Recursion;
 
-var jObject = JObject.Parse(@"{
-  CPU: 'Intel',
-  Drives: [
-    'DVD read/writer',
-    '500 gigabyte hard drive'
-  ]
-}");
-foreach (var item in jObject)
-{
-    ;
-}
-
-var solution = new EvaluateReversePolishNotationSolution();
-var result = solution.EvalRPN(new string[] { "4", "13", "5", "/", "+" });
+var solution = new PowXNSolution();
+var result = solution.MyPow(2, -2);
 Console.WriteLine(result);
 
