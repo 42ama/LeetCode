@@ -44,11 +44,6 @@ namespace NeetCodeRoadmap.Stack
                 stack.Push((current, i));
             }
 
-            foreach (var item in stack)
-            {
-                result[item.Item2] = 0;
-            }
-
             return result;
         }
     }
