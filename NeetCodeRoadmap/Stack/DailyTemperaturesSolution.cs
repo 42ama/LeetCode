@@ -35,6 +35,7 @@ namespace NeetCodeRoadmap.Stack
                         }
                         else
                         {
+                            // Нет смысла смотреть дальше
                             break;
                         }
                     }
