@@ -11,56 +11,28 @@ namespace NeetCodeRoadmap.Stack
         public int CarFleet(int target, int[] position, int[] speed)
         {
             var numberOfCars = position.Length;
-
             var fleetCount = 0;
+            var reachDestinationAt = new float[numberOfCars];
+            
+            // 1. Разбиваем на пары позиция+скорость
+            // 2. Сортируем, наибольшая позиция впереди
+            // 3. Для каждой машины считаем (S - currentPos)/ speed - время доезжания до цели
+            // 4. Складываем время доезжания в descending stack
+            // 5. Считаем время для следующей машины:
+            // 5.1 Если оно больше или равно чем последнее хранящееся в стеке, то считаем что эта машина присоединилась к флоту и ей можно принебречь
+            // 5.2 Если оно меньше, то тогда такая машина доезжает отдельно - запишем её в стек, как новый "стопор"
+
             while (true)
             {
-                var reachNMileThisIteration = new Dictionary<int, List<int>>();
-                var processedCarCounter = 0;
+                for (int currentCarIndex = 0; currentCarIndex < numberOfCars; currentCarIndex++)
+                {
+                    reachDestinationAt[currentCarIndex] = Convert.ToSingle(target - position[currentCarIndex]) / speed[currentCarIndex];
+                }
 
                 for (int currentCarIndex = 0; currentCarIndex < numberOfCars; currentCarIndex++)
                 {
-                    if (position[currentCarIndex] == target)
-                    {
-                        processedCarCounter++;
-                        if (processedCarCounter == numberOfCars)
-                        {
-                            return fleetCount;
-                        }
-                        else
-                        {
-                            continue;
-                        }                        
-                    }
-
-                    position[currentCarIndex] = Math.Clamp(position[currentCarIndex] + speed[currentCarIndex], 0, target);
-
-                    if (reachNMileThisIteration.TryGetValue(position[currentCarIndex], out var cars))
-                    {
-                        if (position[currentCarIndex] != target)
-                        {
-                            foreach (var otherCarIndex in cars)
-                            {
-                                if (speed[currentCarIndex] > speed[otherCarIndex])
-                                {
-                                    speed[currentCarIndex] = speed[otherCarIndex];
-                                }
-                                else
-                                {
-                                    speed[otherCarIndex] = speed[currentCarIndex];
-                                }
-                            }
-                        }
-
-                        cars.Add(currentCarIndex);
-                    }
-                    else
-                    {
-                        reachNMileThisIteration.Add(position[currentCarIndex], new List<int> { currentCarIndex });
-                    }
+                    reachDestinationAt[currentCarIndex] = Convert.ToSingle(target) / speed[currentCarIndex];
                 }
-
-                fleetCount += reachNMileThisIteration.Count(i => i.Key == target);
             }
         }
     }
