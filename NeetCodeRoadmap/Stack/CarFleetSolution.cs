@@ -13,26 +13,74 @@ namespace NeetCodeRoadmap.Stack
             var numberOfCars = position.Length;
             var fleetCount = 0;
             var reachDestinationAt = new float[numberOfCars];
-            
+
             // 1. Разбиваем на пары позиция+скорость
             // 2. Сортируем, наибольшая позиция впереди
-            // 3. Для каждой машины считаем (S - currentPos)/ speed - время доезжания до цели
-            // 4. Складываем время доезжания в descending stack
-            // 5. Считаем время для следующей машины:
-            // 5.1 Если оно больше или равно чем последнее хранящееся в стеке, то считаем что эта машина присоединилась к флоту и ей можно принебречь
-            // 5.2 Если оно меньше, то тогда такая машина доезжает отдельно - запишем её в стек, как новый "стопор"
 
-            while (true)
+            var joined = new List<Car>(numberOfCars);
+            for (int i = 0; i < numberOfCars; i++)
             {
-                for (int currentCarIndex = 0; currentCarIndex < numberOfCars; currentCarIndex++)
+                joined.Add(new Car { Postion = position[i], Speed = speed[i] });
+            }
+            joined.Sort();
+
+            // 3. Для каждой машины считаем (S - currentPos)/ speed - время доезжания до цели
+            var checkStack = new Stack<float>();
+            foreach (var car in joined)
+            {
+                var time = Convert.ToSingle(target - car.Postion) / car.Speed;
+
+                if (checkStack.Count == 0)
                 {
-                    reachDestinationAt[currentCarIndex] = Convert.ToSingle(target - position[currentCarIndex]) / speed[currentCarIndex];
+                    checkStack.Push(time);
+                    continue;
                 }
 
-                for (int currentCarIndex = 0; currentCarIndex < numberOfCars; currentCarIndex++)
+                // 4. Складываем время доезжания в descending stack
+                var topTime = checkStack.Peek();
+                if (time <= topTime)
                 {
-                    reachDestinationAt[currentCarIndex] = Convert.ToSingle(target) / speed[currentCarIndex];
+                    // 5.1 Если оно меньше или равно, чем последнее хранящееся в стеке, то считаем что эта машина присоединилась к флоту и ей можно принебречь
                 }
+                else
+                {
+                    // 5.2 Если оно больше тогда такая машина доезжает отдельно - запишем её в стек, как новый "стопор"
+                    checkStack.Push(time);
+                }
+            }
+
+            return checkStack.Count;
+        }
+
+        public struct Car : IComparable<Car>, IEquatable<Car>
+        {
+            public int Postion;
+            public float Speed;
+
+            int IComparable<Car>.CompareTo(Car other)
+            {
+                if (Postion > other.Postion)
+                {
+                    return -1;
+                }
+                else if (Postion < other.Postion)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+
+            bool IEquatable<Car>.Equals(Car other)
+            {
+                return Postion == other.Postion && Speed == other.Speed;
+            }
+
+            public override string ToString()
+            {
+                return $"({Postion}, {Speed}";
             }
         }
     }
