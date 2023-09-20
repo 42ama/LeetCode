@@ -2,5 +2,5 @@
 using NeetCodeRoadmap.Stack;
 
 var solution = new LargestRectangleAreaBetterSolution();
-var result = solution.LargestRectangleArea(new int[] { 2, 1, 5, 6, 2, 3 });
+var result = solution.LargestRectangleArea(new int[] { 4, 2, 0, 3, 2, 5 });
 Console.WriteLine(result); 

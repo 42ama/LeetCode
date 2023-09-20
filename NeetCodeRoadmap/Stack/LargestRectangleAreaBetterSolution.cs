@@ -10,88 +10,71 @@ namespace NeetCodeRoadmap.Stack
     {
         public int LargestRectangleArea(int[] heights)
         {
-            var stack = new Stack<Rectangle>();
+            // Может передлать на descendig stack и на каждой итерации считать? 
+            var stackArr = new int[heights.Length];
+            var stackArrPointer = 0;
+
             var currentMax = 0;
             for (int i = 0; i < heights.Length; i++)
             {
                 var currentRectHeight = heights[i];
-                if (stack.Count > 0)
+                if (stackArrPointer > 0)
                 {
-                    var stackedRect = stack.Peek();
-                    
-                    // Прерываем набор в случае если новые Rect ниже существующего, ищем в стеке подходящий
-                    if (currentRectHeight < stackedRect.Height)
-                    {
-                        var challangeMax = stack.Count * currentRectHeight;
-                        if (challangeMax > currentMax)
-                        {
-                            currentMax = challangeMax;
-                        }
+                    var stackedRectHeight = stackArr[stackArrPointer - 1];
 
+                    var poppedCount = 0;
+                    // Прерываем набор в случае если новые Rect ниже существующего, ищем в стеке подходящий
+                    if (currentRectHeight < stackedRectHeight)
+                    {
+                        var savedPointerPosition = stackArrPointer;
                         while (true)
                         {
                             // Здесь некорректный warning - stack может очиститься за цикл.
-                            if (stack.Count == 0) { break; }
+                            if (stackArrPointer == 0) { break; }
 
-                            var popped = stack.Pop();
-                            var challngeHeight = (stack.Count + 1) * popped.Height; // Хуйня какая-то нерабочая
+                            var poppedHeight = stackArr[stackArrPointer - 1];
+                            if (currentRectHeight < poppedHeight)
+                            {
+                                stackArr[stackArrPointer - 1] = currentRectHeight;
+                            }
+                            
+                            stackArrPointer--;
+
+                            poppedCount++;
+                            var challngeHeight = poppedCount * poppedHeight;
                             if (challngeHeight > currentMax)
                             {
-                                currentMax = challangeMax;
+                                currentMax = challngeHeight;
                             }
 
-                            if (currentRectHeight >= popped.Height) { break; }
+                            if (currentRectHeight >= poppedHeight) { break; }
                         }
+                        stackArrPointer = savedPointerPosition;
                     }
                 }
 
-                stack.Push(new Rectangle { Height = currentRectHeight, Position = i });
+                stackArr[stackArrPointer] = currentRectHeight;
+                stackArrPointer++;
             }
 
-            if (stack.Count > 0)
+            var poppedCountOuter = 0;
+            while (true)
             {
-                var stackedRect = stack.Peek();
-                var challangeMax = stack.Count * stackedRect.Height;
-                if (challangeMax > currentMax)
+                // Здесь некорректный warning - stack может очиститься за цикл.
+                if (stackArrPointer == 0) { break; }
+
+                var poppedHeight = stackArr[stackArrPointer - 1];
+                stackArrPointer--;
+
+                poppedCountOuter++;
+                var challngeHeight = poppedCountOuter * poppedHeight;
+                if (challngeHeight > currentMax)
                 {
-                    currentMax = challangeMax;
+                    currentMax = challngeHeight;
                 }
             }
 
             return currentMax;
-        }
-
-        public struct Rectangle : IComparable<Rectangle>, IEquatable<Rectangle>
-        {
-            public int Height;
-            public int Position;
-
-            // Сортируем по высоте от меньшего к большему
-            int IComparable<Rectangle>.CompareTo(Rectangle other)
-            {
-                if (Height > other.Height)
-                {
-                    return 1;
-                }
-                else if (Height < other.Height)
-                {
-                    return -1;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
-
-            bool IEquatable<Rectangle>.Equals(Rectangle other)
-            {
-                return Position == other.Position && Height == other.Height;
-            }
-
-            public override string ToString()
-            {
-                return $"(H:{Height}, P:{Position}";
-            }
         }
     }
 }
