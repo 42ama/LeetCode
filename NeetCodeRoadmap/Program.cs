@@ -1,6 +1,7 @@
 ﻿
 using NeetCodeRoadmap.Stack;
+using NeetCodeRoadmap.TwoPointers;
 
-var solution = new LargestRectangleAreaBetterSolution();
-var result = solution.LargestRectangleArea(new int[] { 4, 2, 0, 3, 2, 5 });
+var solution = new ValidPalindromeSolution();
+var result = solution.IsPalindrome(",,,,,,,,,,,,acva");
 Console.WriteLine(result); 
