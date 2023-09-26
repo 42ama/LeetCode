@@ -11,6 +11,7 @@ namespace NeetCodeRoadmap.TwoPointers
         private Dictionary<string, IList<int>> _matches = new Dictionary<string, IList<int>>();
         private int[] _nums;
 
+        // Хуйня, по скорости не проходит. Сортируем и решаем two sum Относительно first
         public IList<IList<int>> ThreeSum(int[] nums)
         {
             if (nums.Length < 3) { return new List<IList<int>>(); }
@@ -18,41 +19,30 @@ namespace NeetCodeRoadmap.TwoPointers
             _nums = nums;
 
             // вернуть все тройки которые суммируются в ноль (нельзя использовать один элемент больше одного раза)            
-            var firstPointer = 0;
-            var secondPointer = 1;
-            var thridPointer = 2;
 
-            while (true)
+
+            for (int firstPointer = 0; firstPointer <= nums.Length - 3; firstPointer++)
             {
-                while (true)
-                {
-                    if (thridPointer > nums.Length - 1)
-                    {
-                        thridPointer--;
-                        break;
-                    }
-                    CheckAndAdd(firstPointer, secondPointer, thridPointer);
-                    thridPointer++;
-                }
-
+                var secondPointer = firstPointer + 1;
+                var thirdPointer = secondPointer + 1;
 
                 while (true)
                 {
-                    if (secondPointer > nums.Length - 2)
+                    CheckAndAdd(firstPointer, secondPointer, thirdPointer);
+                    if (secondPointer + 1 == thirdPointer)
                     {
-                        secondPointer--;
-                        break;
+                        if (thirdPointer == nums.Length - 1) { break; }
+
+                        thirdPointer++;
+                        secondPointer = firstPointer + 1;
                     }
-                    CheckAndAdd(firstPointer, secondPointer, thridPointer);
-                    secondPointer++;
-
+                    else
+                    {
+                        secondPointer++;
+                    }
                 }
-
-                firstPointer++;
-                if (firstPointer >= secondPointer) { break; }
             }
 
-            
             return _matches.Select(i => i.Value).ToList();
         }
 
