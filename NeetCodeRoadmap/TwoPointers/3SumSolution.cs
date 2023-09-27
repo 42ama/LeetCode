@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace NeetCodeRoadmap.TwoPointers
 {
+    [Obsolete]
     internal class _3SumSolution
     {
         private Dictionary<string, IList<int>> _matches = new Dictionary<string, IList<int>>();
