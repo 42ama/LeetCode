@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace NeetCodeRoadmap.TwoPointers
 {
+    /// <summary>
+    /// Стэк
+    /// </summary>
     internal class TrappingRainWaterSolution
     {
         public int Trap(int[] height)
