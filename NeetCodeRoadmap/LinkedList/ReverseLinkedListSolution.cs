@@ -11,23 +11,32 @@ namespace NeetCodeRoadmap.LinkedList
 
         public ListNode ReverseList(ListNode head)
         {
-            return Recurse(head.next, head);
+            return Iterative(head);
         }
 
-        private ListNode Recurse(ListNode current, ListNode previous)
+        private ListNode Iterative(ListNode head)
         {
-            if (current == null) { return null; }
-
-            if (current.next == null)
+            var stack = new Stack<int>();
+            while (head != null)
             {
-                var newNext = new ListNode(current.val);
-                return newNext;
+                stack.Push(head.val);
+                head = head.next;
             }
 
-            var newHead = Recurse(current.next, current);
-            current.next = null;
-            newHead.next = current;
-            return current;
+            if (stack.Count == 0) { return null; }
+
+            var headNode = new ListNode(stack.Pop());
+            var previousNode = headNode;
+            while (stack.Count > 0)
+            {
+                var item = stack.Pop();
+
+                var newNode = new ListNode(item);
+                previousNode.next = newNode;
+                previousNode = newNode;
+            }
+
+            return headNode;
         }
     }
 }

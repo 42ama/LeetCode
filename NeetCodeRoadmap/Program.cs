@@ -1,8 +1,8 @@
 ﻿
 using NeetCodeRoadmap.LinkedList;
 
-var solution = new ReverseLinkedListSolution();
-var listOnTest = ListNode.Create(1, 2, 3, 4, 5);
-Console.WriteLine(listOnTest);
-var result = solution.ReverseList(listOnTest);
+var solution = new MergeTwoListsSolution();
+var list1 = ListNode.Create(1, 3);
+var list2 = ListNode.Create(1, 2);
+var result = solution.MergeTwoLists(list1, list2);
 Console.WriteLine(result); 
