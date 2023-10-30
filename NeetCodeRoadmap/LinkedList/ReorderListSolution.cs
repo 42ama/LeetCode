@@ -10,57 +10,32 @@ namespace NeetCodeRoadmap.LinkedList
     {
         public void ReorderList(ListNode head)
         {
-            var reverseData = ReverseList(head);
+            if (head == null || head.next == null) { return; }
+
+            var allNodes = new List<ListNode>();
 
             var current = head;
-            var prev = current;
-            var currentReverse = reverseData.Head;
-            ListNode temp, tempReverse;
-            var counter = reverseData.TotalCount % 2;
-            while (counter < reverseData.TotalCount/2)
+            do
             {
-                prev = current;
-                temp = current.next;
-                tempReverse = currentReverse.next;
+                allNodes.Add(current);
+                current = current.next;
+            } while (current != null);
 
-                current.next = currentReverse;
-                currentReverse.next = temp;
+            var firstPointer = 0;
+            var lastPointer = allNodes.Count - 1;
 
-                current = temp;
-                currentReverse = tempReverse;
-                counter++;
-            }
-
-            Console.WriteLine(prev);
-            Console.WriteLine(current);
-            Console.WriteLine(currentReverse);
-            //prev.next = null;
-            //current.next = null;
-            //currentReverse.next = null;
-        }
-
-        private (ListNode Head, int TotalCount) ReverseList(ListNode head)
-        {
-            var stack = new Stack<int>();
-            while (head != null)
+            while (firstPointer != lastPointer)
             {
-                stack.Push(head.val);
-                head = head.next;
+                var last = allNodes[lastPointer];
+                allNodes[firstPointer].next = last;
+
+                firstPointer++;
+
+                if (firstPointer == lastPointer) { return; }
+
+                last.next = allNodes[firstPointer];
+                lastPointer--;
             }
-
-            var headNode = new ListNode(stack.Pop());
-            var previousNode = headNode;
-            var totalCount = stack.Count;
-            while (stack.Count > 0)
-            {
-                var item = stack.Pop();
-
-                var newNode = new ListNode(item);
-                previousNode.next = newNode;
-                previousNode = newNode;
-            }
-
-            return (headNode, totalCount + 1);
         }
     }
 }
