@@ -27,12 +27,14 @@ namespace NeetCodeRoadmap.LinkedList
             while (firstPointer != lastPointer)
             {
                 var last = allNodes[lastPointer];
+                last.next = null; // Нужно чтобы комп не решил просчитать циклический linked-list
                 allNodes[firstPointer].next = last;
 
                 firstPointer++;
 
                 if (firstPointer == lastPointer) { return; }
 
+                allNodes[firstPointer].next = null; // Нужно чтобы комп не решил просчитать циклический linked-list
                 last.next = allNodes[firstPointer];
                 lastPointer--;
             }
