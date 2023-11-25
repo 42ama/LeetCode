@@ -8,18 +8,18 @@ namespace NeetCodeRoadmap.LinkedList
 {
     internal class CopyListWithRandomPounterSolution
     {
-        public RandomListNode Execute(RandomListNode head)
+        public Node Execute(Node head)
         {
-            var nodes = new List<RandomListNode>();
+            var nodes = new List<Node>();
 
-            var newHead = new RandomListNode { val = head.val };
+            var newHead = new Node { val = head.val };
             var current = head.next;
 
             var last = newHead;
             while (true)
             {
                 // Установили val
-                var newCurrent = new RandomListNode { val = current.val };
+                var newCurrent = new Node { val = current.val };
 
                 // Установили next
                 last.next = newCurrent;
@@ -32,18 +32,18 @@ namespace NeetCodeRoadmap.LinkedList
             }
         }
 
-        public class RandomListNode : ListNode
+        public class Node : ListNode
         {
             // position of linked
-            public int random;
+            public Node random;
 
             // Hiding base.next;
-            public RandomListNode next;
+            public Node next;
 
             public override string ToString()
             {
                 // !!! Возмонжо уходит в рекурсию и ломает всё.
-                return base.ToString() + $" random: {random}";
+                return base.ToString() + $" random.val: {random.val}";
             }
         }
     }
