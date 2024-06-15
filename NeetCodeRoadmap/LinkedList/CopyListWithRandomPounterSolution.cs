@@ -25,10 +25,7 @@ namespace NeetCodeRoadmap.LinkedList
                 last.next = newCurrent;
 
                 // Установили random
-                if (current.random < nodes.Count)
-                {
-
-                }
+                
             }
         }
 
